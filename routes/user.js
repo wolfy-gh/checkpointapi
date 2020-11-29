@@ -11,6 +11,10 @@ const userModel = require("../models/User")
 router.post("/", async (req, res) => {
     try {
         const newUser = new userModel({ ...req.body })
+        if(req.body.email){
+            res.send({message:"email already exists"})
+            return
+        }
         const response = await newUser.save()
         res.send({ response: response, message: "user added succesfully" })
     } catch (error) {
